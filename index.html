@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>College Routine</title>
+
+    <!-- Connect to the internet to see this font in your browser -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Collaspe this style section as this will make you scroll less -->
+    <!-- You also have not to touch style for now -->
+    <!-- There is no responsive code for Mobile and Tablets -->
+    <style>
+      :root {
+        color-scheme: dark;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      body.light-mode {
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      body.dark-mode {
+        background-color: #2b2b2b;
+        color: #d2d2d2;
+      }
+
+      /* TABLE Design start =============================================================== */
+      table {
+        width: 90%;
+        margin: 60px 50px;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ccc;
+      }
+
+      table a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      body.dark-mode table a {
+        color: #d2d2d2;
+      }
+
+      table {
+        overflow: hidden;
+        border-collapse: collapse;
+        border-radius: 8px;
+        border-style: hidden; /* hide standard table (collapsed) border */
+        box-shadow: 0 0 0 1px #ccc; /* this draws the table border  */
+      }
+
+      td {
+        border: 1px solid #ccc;
+      }
+
+      /* top-left border-radius */
+      table tr:first-child th:first-child {
+        border-top-left-radius: 6px;
+      }
+
+      /* top-right border-radius */
+      table tr:first-child th:last-child {
+        border-top-right-radius: 6px;
+      }
+
+      /* bottom-left border-radius */
+      table tr:last-child td:first-child {
+        border-bottom-left-radius: 6px;
+      }
+
+      /* bottom-right border-radius */
+      table tr:last-child td:last-child {
+        border-bottom-right-radius: 6px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+
+      body.dark-mode th {
+        background-color: #333;
+      }
+
+      body.dark-mode .highlight th {
+        color: #004440;
+        background-color: #c5c5c5c4;
+      }
+
+      /* Toggle Dark/Light Mode Design start =============================================================== */
+
+      #toggleButton {
+        margin: 10px 0;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #004440;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+
+        position: absolute;
+        top: 20px;
+        right: 60px;
+        z-index: 10;
+      }
+
+      #toggleButton:hover {
+        background-color: #005c56;
+      }
+
+      h2,
+      p,
+      ul {
+        margin: 0 0 20px 0;
+      }
+      .highlight {
+        background-color: #ffff99;
+      }
+      body.dark-mode .highlight {
+        background-color: #004440;
+      }
+
+      li {
+        display: block;
+      }
+
+      ul {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      ul > li {
+        background-color: #eeeeee;
+        padding: 10px 10px;
+        border-radius: 5px;
+      }
+
+      body.dark-mode ul > li {
+        background-color: #343434;
+        padding-inline: 10px;
+      }
+
+      @keyframes youtubeVideoBackAnimation {
+        0% {
+          top: 0px;
+          opacity: 1;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+        }
+        50% {
+          opacity: 0.9;
+        }
+        100% {
+          background-color: rgba(0, 0, 0, 0);
+
+          top: -400px;
+          opacity: 0;
+          display: none;
+        }
+      }
+
+      @keyframes youtubeVideo {
+        0% {
+          top: -400px;
+          opacity: 0;
+          background-color: rgba(0, 0, 0, 0);
+          display: none;
+        }
+        50% {
+          opacity: 0.9;
+        }
+        100% {
+          top: 0px;
+          opacity: 1;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+        }
+      }
+
+      /* YouTube Video Window Design start =============================================================== */
+
+      .video-Container {
+        animation: youtubeVideo 800ms ease-in-out;
+        animation-fill-mode: backwards;
+        /* animation-direction: normal; */
+
+        position: fixed;
+        /* background-color: rgba(0, 0, 0, 0.50); */
+        height: 100vh;
+        width: 100%;
+
+        top: 0px;
+        box-shadow: 1px 6px 10px black;
+
+        display: none;
+        align-items: center;
+        z-index: 1009;
+
+        backdrop-filter: blur(10px);
+
+        .top-subjects {
+          position: fixed;
+          display: flex;
+          flex-wrap: nowrap;
+          flex-direction: column;
+          gap: 5px;
+          /* z-index: 1002; */
+          justify-content: center;
+          align-items: baseline;
+
+          padding: 50px;
+          padding-left: 120px;
+          padding-bottom: 10px;
+
+          transition: all 200ms ease-in-out;
+
+          .subject {
+            padding: 3px;
+            padding-inline: 10px;
+            border-radius: 50px;
+            margin-block: 2px;
+
+            cursor: pointer;
+            user-select: none;
+            opacity: 0.4;
+            transition: all 280ms ease-in-out;
+            z-index: 2005;
+
+            position: relative;
+            /* text-shadow: 2px 2px #ff0000; */
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+              display: none;
+            }
+          }
+
+          .subject:hover {
+            /* background-color: rgba(75, 75, 75, 0.582); */
+            /* background-image : liner-gradient(0% red, 100% gold); */
+
+            img {
+              display: block;
+              height: 35px;
+              border-radius: 50%;
+            }
+
+            opacity: 1;
+            font-size: 20px;
+            padding: 10px;
+
+            padding-inline: 10px 20px;
+            color: white;
+            backdrop-filter: blur(4px);
+            font-weight: 600;
+            text-shadow: -2px 1px 7px #000000;
+            box-shadow: 0px 0px 6px 0px black;
+            background-color: #2f2f2f;
+            /* border  : 2px solid white; */
+            /* z-index: 1005; */
+          }
+        }
+
+        .top-subjects:hover {
+          /* color: red; */
+          padding-left: 20px;
+
+          opacity: 1;
+
+          z-index: 1009;
+        }
+      }
+
+      iframe {
+        position: relative;
+        margin-left: 160px;
+        padding: 6px;
+        height: 90vh;
+        width: 80vw;
+        border-radius: 16px;
+        box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.781);
+        z-index: 1004;
+      }
+
+      .subject-full-forms {
+        li {
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+
+      @keyframes syllabusSlider {
+        0% {
+          /* width: 0%; */
+          right: -500px;
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.9;
+        }
+        100% {
+          right: 0px;
+          /* width: 40%; */
+          opacity: 1;
+        }
+      }
+
+      .syllabus-Container {
+        display: none;
+        animation: syllabusSlider 500ms ease-in-out;
+        animation-fill-mode: forwards;
+        opacity: 0;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        height: 100vh;
+        width: 42%;
+        padding: 10px 30px;
+
+        z-index: 1003;
+        box-shadow: 0px 0px 10px 1px black;
+        background-color: #2e2e2e65;
+
+        backdrop-filter: blur(8px);
+
+        .subjects {
+          display: flex;
+          flex-wrap: wrap;
+          padding-bottom: 20px;
+          gap: 10px;
+          z-index: 1002;
+          text-wrap: nowrap;
+        }
+
+        .subject {
+          padding: 3px;
+          padding-inline: 10px;
+          border-radius: 20px;
+          background-color: #484848;
+
+          cursor: pointer;
+          user-select: none;
+          border: 1px solid #484848;
+        }
+
+        .subject:hover {
+          /* background-color: rgb(37, 37, 37); */
+          border: 1px solid white;
+        }
+
+        .syllabus-content {
+          /* width: 100%; */
+          overflow-y: scroll;
+          height: 80%;
+
+          padding-bottom: 30px;
+          margin-bottom: 30px;
+
+          /* resize: both; */
+          /* border: 1px solid red; */
+
+          /* width: 50%;/ */
+        }
+
+        .syllabus-content::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      @keyframes marquee {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .professors-container {
+        display: flex;
+        flex-wrap: wrap;
+        /* gap: 10px; */
+        padding-left: 20px;
+        /* justify-content: space-evenly; */
+
+        .card {
+          animation: marquee 1s;
+          animation-timeline: view();
+          animation-range: entry 0% contain 25%;
+          amimation-fill-mode: both;
+
+          display: flex;
+          flex-direction: column;
+          padding: 5px;
+          border-radius: 8px;
+          background-color: #3f3f3f;
+          gap: 8px;
+          margin: 10px;
+
+          img {
+            filter: invert() opacity(0.8);
+            border-radius: 8px;
+            width: 150px;
+            padding-left: 2px;
+          }
+
+          .name {
+            width: 150px;
+            padding-left: 5px;
+          }
+        }
+      }
+
+      .subject-full-forms {
+        .subject-video::before {
+          content: "";
+          height: 200px;
+          width: 200px;
+
+          background-color: red;
+        }
+      }
+
+      body.dark-mode .subject-video:hover {
+        background-color: #3f3f3f;
+      }
+
+      body.light-mode .subject-video:hover {
+        background-color: #d1d1d1;
+      }
+      body.light-mode .card {
+        background-color: #d9d9d9;
+      }
+    </style>
+  </head>
+
+  <body class="dark-mode">
+    <!-- YouTube Window / Fullscreen Section -->
+    <!-- Shortcut key : y  (for open and close)-->
+    <!-- Hidden by default -->
+    <div class="video-Container">
+      <div class="top-subjects" onclick="event.stopPropagation()">
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          System Software
+        </div>
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          Computer Networks
+        </div>
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          Image Processing
+        </div>
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          Cloud Computing
+        </div>
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          Entrepreneurship
+        </div>
+        <div class="subject">
+          <img
+            src="https://images.sftcdn.net/images/t_app-icon-s/p/31160ebe-dc8f-43e0-951c-e03784070767/1801217631/exo-media-player-logo"
+            alt=""
+            srcset=""
+          />
+          Natural Language Processing
+        </div>
+      </div>
+
+      <iframe
+        id="youtubeIframe"
+        src="https://www.youtube.com/embed/J-KxVvDRl18?list=PLbwfaPBgAKFEPBg-OFzmjFWmRKKrYigLi"
+        frameborder=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <!-- Syllabus / Right Side  section  -->
+    <!-- Shortcut key : y  (for open and close)-->
+    <!-- Hidden by default -->
+    <div class="syllabus-Container">
+      <div class="subjects">
+        <div class="subject">System Software</div>
+        <div class="subject">Computer Networks</div>
+        <div class="subject">Image Processing</div>
+        <div class="subject">Cloud Computing</div>
+        <div class="subject">Entrepreneurship</div>
+        <div class="subject">Natural Language Processing</div>
+      </div>
+
+      <div class="syllabus-content">
+        <div class="module1">
+          <h2>Module 1</h2>
+
+          <input type="checkbox" name="apple" id="apple" />
+          <label for="apple"> Apple</label>
+
+          <input type="checkbox" name="mango" id="mango" />
+          <label for="mango"> Mango</label>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+        <div class="module1">
+          <h2>Module 1</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+
+        <div class="module1">
+          <h2>Module 1</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+        <div class="module1">
+          <h2>Module 1</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+
+        <div class="module1">
+          <h2>Module 1</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+        <div class="module1">
+          <h2>Module 1</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+        <div class="module1">
+          <h2>Module Last</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
+            laborum unde quibusdam dicta natus est maiores fugiat odit accusamus
+            impedit, repellendus molestias eos modi ipsam repudiandae optio
+            eaque pariatur iusto voluptas tempora beatae alias minima. Quae
+            aliquid veniam natus incidunt. Dignissimos harum illum doloribus hic
+            ut dolor totam et. Assumenda?
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+      <!-- Heading Section -->
+      <h1>University College of Engineering & Technology (UCET)</h1>
+      <h2 style="color: #9c9c9c; margin-bottom: 5px">
+        Vinoba Bhave University, Hazaribag - 825319
+      </h2>
+      <p style="color: #9c9c9c">
+        Revised Time-Table for
+        <span
+          style="
+            background-color: #004440;
+            padding: 5px;
+            border-radius: 20px;
+            color: lightgrey;
+          "
+        >
+          4th Semester (CSE/IT)</span
+        >
+        w.e.f.: 27.05.2024<br />Session: 2022-2026
+      </p>
+
+      <button id="toggleButton" onclick="toggleMode()">
+        Toggle Dark/Light Mode
+      </button>
+
+      <!-- This is routine table edit it according to your semester routine -->
+      <table>
+        <tr>
+          <th>Days/Time</th>
+          <th>11:20-12:10</th>
+          <th>12:10-1:00</th>
+          <th>1:00-1:50</th>
+          <th></th>
+          <th>2:10-3:00</th>
+          <th>3:00-3:50</th>
+          <th>3:50-4:40</th>
+        </tr>
+        <tr class="monday">
+          <th>MONDAY</th>
+          <td>DM (SD)</td>
+          <td>DAA (JS)</td>
+          <td>MATH-IV (BM)</td>
+          <td
+            rowspan="6"
+            style="
+              writing-mode: vertical-rl;
+              text-orientation: mixed;
+              transform: rotate(180deg);
+            "
+          >
+            LUNCH
+          </td>
+          <td colspan="3">Extra Activity-III<br />(NSO/NSS/NCC/Yoga/CA)</td>
+        </tr>
+        <tr class="tuesday">
+          <th>TUESDAY</th>
+
+          <td title="Youtube se lecture khoj lo">COA(RR)</td>
+          <td>DAA (JS)</td>
+          <td>MATH-IV (BM)</td>
+          <td>ENV Se. (GF)</td>
+          <td colspan="3">Digital Library</td>
+        </tr>
+        <tr class="wednesday">
+          <th>WEDNESDAY</th>
+          <td>OOP (AK)</td>
+          <td>COA (RR)</td>
+          <td>MATH-IV (BM)</td>
+          <td>ENV Se. (GF)</td>
+          <td colspan="3">Advance Communication<br>Lab(AP)</td>
+        </tr>
+        <tr class="thursday">
+          <th>THURSDAY</th>
+          <td>OOP (AK)</td>
+          <td>COA (RR)</td>
+          <td>MATH-IV (BM)</td>
+          <td >ENV Se. (GF)</td>
+          <td >X</td>
+          <td >X</td>
+        </tr>
+        <tr class="friday">
+          <th>FRIDAY</th>
+          <td colspan="3">OOP Lab (AK)</td>
+          <td >DM (SD)</td>
+          <td >X</td>
+          <td >X</td>
+        </tr>
+        <tr class="saturday">
+          <th>SATURDAY</th>
+          <td>OOP (AK)</td>
+          <td>DM (SD)</td>
+          <td>DAA (JS)</td>
+          <td colspan="3">DAA Lab(JS)</td>
+        </tr>
+      </table>
+
+      <p style="font-size: 18px; padding-top: 20px">🏢 Room No.: 130 </p>
+
+      <!-- Edit this section -->
+      <p style="font-size: 25px; padding-top: 20px">
+        <strong>📚Subjects:</strong>
+      </p>
+      <ul class="subject-full-forms">
+        <li class="">
+            <!-- class="subject-video"   For adding video link--> 
+          COA - Computer Organization and Architecture
+        </li>
+        <li class="" title="Best video youtube me mile to hamko bhi send karna">DAA - Design and Analysis of Algorithms</li>
+        <li class="">DM - Discrete Mathematics</li>
+        <li class="">OOP - Object Oriented Programming</li>
+        <li class="">ENV.Se - Environmental Science</li>
+        <li class="">AP - Advance Communication</li>
+      </ul>
+
+      <!-- Edit this section -->
+      <!-- Images should be of same size -->
+      <p style="font-size: 25px; padding-top: 20px">
+        <strong>👨‍🏫Course Teachers:</strong>
+      </p>
+      <div class="professors-container">
+        <div class="card" title="Are HOD hu main yaar!!!">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">RR - Mr. Rahul Ranjan</div>
+        </div>
+
+        <div class="card" title="Naam mera Awadhesh Kumar Hehehe...">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">AK - Mr. Awadhesh Kumar</div>
+        </div>
+
+        <div class="card" title="visa aut passport banwa liya ki nahi ?">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">AP - Dr. Amit Purushottam</div>
+        </div>
+
+        <div class="card" title="Main Pdhane todi Students ko dekhne aata hu">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">SD - Mr. Susobhan Das</div>
+        </div>
+
+        <div class="card">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">BM - Dr. Buddhadeo. Mahato</div>
+        </div>
+
+        <div class="card" title="">
+          <img
+            src="https://i.pinimg.com/736x/b4/1b/78/b41b784be9a6392773515b32217b39eb.jpg"
+            alt=""
+          />
+          <div class="name">JS - Mr. Joydeb Sarkar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Developer : Feedback Section -->
+    <div class="author" style="text-align: center; padding: 50px 0px">
+      <a
+        style="text-decoration: none; color: #717171"
+        href="mailto:ajayrajkisku22@gmail.com?subject=Feedback from College Routine Website"
+      >
+        ❤ Modified by Manoj Singh
+      </a>
+    </div>
+
+    <!-- //JavaScript -->
+    <script>
+      //For new people this is JavaScript Code
+
+      // Toggle light/dark button function
+      let isDarkTheme = true;
+      function toggleMode() {
+        const body = document.body;
+        // .style.colorScheme = "light";
+
+        if (isDarkTheme) {
+          document.documentElement.style.setProperty("color-scheme", "light");
+          isDarkTheme = false;
+        } else {
+          document.documentElement.style.setProperty("color-scheme", "dark");
+          isDarkTheme = true;
+        }
+
+        body.classList.toggle("dark-mode");
+        body.classList.toggle("light-mode");
+      }
+
+      // This will highlight the row of today's day in routine table
+      function highlightToday() {
+        const days = [
+          "sunday",
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+        ];
+        const today = new Date().getDay();
+        const todayClass = days[today];
+        const todayRow = document.querySelector(`.${todayClass}`);
+        if (todayRow) {
+          todayRow.classList.add("highlight");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", highlightToday);
+
+      // 6th Semester CSE Subjects and their embedding YouTube playlist Links
+      // Embedded YouTube link is different from your normal YouTube link
+
+      const subjectLinks = {
+        "System Software":
+          "https://www.youtube.com/embed/wG0hS7tS_J4?list=PL4gu8xQu0_5J8yriweSvyLSCoFi1AKH8c",
+        "Computer Networks":
+          "https://www.youtube.com/embed/VwN91x5i25g?list=PLBlnK6fEyqRgMCUAG0XRw78UA8qnv6jEx",
+        "Image Processing":
+          "https://www.youtube.com/embed/J-KxVvDRl18?list=PLbwfaPBgAKFEPBg-OFzmjFWmRKKrYigLi",
+        "Cloud Computing":
+          "https://www.youtube.com/embed/Dv0sjAYnVCY?list=PL9FuOtXibFjUE8MpVv6uiAWfj5E3dsBZR",
+        Entrepreneurship:
+          "https://www.youtube.com/embed/aLoRz6hidCM?list=PLsh2FvSr3n7eLqyEo8Xoz5F6FOn5ik6RB",
+        "Natural Language Processing":
+          "https://www.youtube.com/embed/v=boQTFk1BqbY?list=PLPIwNooIb9vimsumdWeKF3BRzs9tJ-_gy",
+      };
+
+      const topSubjects = document.querySelectorAll(".subject");
+      // console.log(topSubjects.classList)
+
+      topSubjects.forEach((element) => {
+        element.addEventListener("click", () => {
+          text = element.textContent;
+          text = text.trim();
+          // element.style.border = "2px solid green"
+          youtubeIframe.src = subjectLinks[text];
+          console.log(text);
+        });
+
+        // element.style.border = "none"
+        //     console.log(text)
+      });
+
+      const subjectVideo = document.querySelectorAll(".subject-video");
+      subjectVideo.forEach((element) => {
+        element.addEventListener("click", () => {
+          console.log("subjectVideo Button Pressed");
+          videocontainer.style.animation = "youtubeVideo 800ms ease-in-out";
+          // videocontainer.style.animationFillMode = "both"
+          videocontainer.style.display = "flex";
+          // videocontainer.style.display = "block"
+
+          // console.log(element.attributes["playlist"])
+          // youtubeIframe.src = element.attributes["playlist"].textContent
+
+          text = element.textContent;
+          // text = text.toLowerCase();
+          text = text.split("-")[1].trim();
+
+          youtubeIframe.src = subjectLinks[text];
+        });
+      });
+
+      let videoFrame = false;
+      let isSyllabusOpen = false;
+      let youtubeOpen = false;
+
+      //Close the YouTube window by clicking background of the youtube video window
+      // Video continue to play after even closed - I think I remove the div element and add later every time
+      // for now pause the video and close; if you hear the sound of youtube video it
+      // playing in background ; it's not a bug it's a feature; press 'y' and it will bring the YouTube window
+      const videocontainer = document.querySelector(".video-Container");
+      videocontainer.addEventListener("click", () => {
+        console.log("Closing videocontainer");
+        // videocontainer.style.display = "flex"
+        videocontainer.style.animation =
+          "youtubeVideoBackAnimation 800ms ease-in-out";
+        videocontainer.style.animationFillMode = "both";
+        youtubeOpen = false;
+      });
+
+      const syllabusContainer = document.querySelector(".syllabus-Container");
+
+      document.onkeypress = function (e) {
+        console.log(e.key);
+
+        if (e.key == "s" && !isSyllabusOpen) {
+          // syllabusContainer.style.animationDirection = "normal"
+          syllabusContainer.style.display = "block";
+          // syllabusContainer.style.animationDirection = "reverse"
+
+          isSyllabusOpen = true;
+        } else if (e.key == "s" && isSyllabusOpen) {
+          syllabusContainer.style.display = "none";
+          // syllabusContainer.style.animationDirection = "reverse"
+          isSyllabusOpen = false;
+        }
+
+        if (e.key == "y" && !youtubeOpen) {
+          videocontainer.style.display = "flex";
+          videocontainer.style.animation = "youtubeVideo 800ms ease-in-out";
+          // videocontainer.style.animationFillMode = "both"
+
+          youtubeOpen = true;
+        } else if (e.key == "y" && youtubeOpen) {
+          videocontainer.style.animation =
+            "youtubeVideoBackAnimation 800ms ease-in-out";
+          videocontainer.style.animationFillMode = "both";
+          // videocontainer.style.display = "none"
+          // videocontainer.attributes.add("hidden")
+          youtubeOpen = false;
+        }
+      };
+    </script>
+  </body>
+</html>
